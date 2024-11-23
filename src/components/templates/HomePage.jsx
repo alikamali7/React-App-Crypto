@@ -11,7 +11,7 @@ function HomePage() {
   const [currency, setCurrency] = useState("usd");
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const options = {
       method: "GET",
       headers: {
@@ -21,12 +21,15 @@ function HomePage() {
     };
 
     const getData = async () => {
-      const res = await fetch(getCoinList(page, currency), options);
-      const json = await res.json();
-      setCoins(json);
-      setIsLoading(false)
+      try {
+        const res = await fetch(getCoinList(page, currency), options);
+        const json = await res.json();
+        setCoins(json);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
     };
-
     getData();
   }, [page, currency]);
 
